@@ -1,0 +1,4 @@
+﻿  project_1_vs.cpp
+C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(114,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(223,10): warning C4101: 'character': unreferenced local variable
+  project_1_vs.vcxproj -> C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\x64\Debug\project_1_vs.exe
