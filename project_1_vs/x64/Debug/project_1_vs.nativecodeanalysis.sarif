@@ -1,0 +1,444 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 22,
+                  "startColumn": 27,
+                  "endLine": 22,
+                  "endColumn": 27
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::{ctor}",
+                  "decoratedName": "??0myString@@QEAA@PEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 27,
+                  "endLine": 29,
+                  "endColumn": 27
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::{ctor}",
+                  "decoratedName": "??0myString@@QEAA@AEBV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26439",
+          "message": {
+            "text": "This kind of function should not throw. Declare it 'noexcept' (f.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 5,
+                  "endLine": 33,
+                  "endColumn": 5
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::{ctor}",
+                  "decoratedName": "??0myString@@QEAA@$$QEAV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 27,
+                  "endLine": 43,
+                  "endColumn": 27
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::=",
+                  "decoratedName": "??4myString@@QEAAAEAV0@AEBV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26439",
+          "message": {
+            "text": "This kind of function should not throw. Declare it 'noexcept' (f.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 15,
+                  "endLine": 48,
+                  "endColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::=",
+                  "decoratedName": "??4myString@@QEAAAEAV0@$$QEAV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 46,
+                  "endLine": 65,
+                  "endColumn": 46
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::+",
+                  "decoratedName": "??HmyString@@QEAA?AV0@AEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 46,
+                  "endLine": 78,
+                  "endColumn": 46
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::+",
+                  "decoratedName": "??HmyString@@QEAA?AV0@AEBV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 46,
+                  "endLine": 88,
+                  "endColumn": 46
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::+=",
+                  "decoratedName": "??YmyString@@QEAAXAEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 102,
+                  "startColumn": 46,
+                  "endLine": 102,
+                  "endColumn": 46
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "myString::+=",
+                  "decoratedName": "??YmyString@@QEAAXAEBV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'BlockListNode::sections' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 141,
+                  "startColumn": 1,
+                  "endLine": 141,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "BlockListNode::{ctor}",
+                  "decoratedName": "??0BlockListNode@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "BlockListNode::sections"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'SelectorListNode::next' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 153,
+                  "startColumn": 1,
+                  "endLine": 153,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "SelectorListNode::{ctor}",
+                  "decoratedName": "??0SelectorListNode@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "SelectorListNode::next"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'SelectorListNode::prev' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 153,
+                  "startColumn": 1,
+                  "endLine": 153,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "SelectorListNode::{ctor}",
+                  "decoratedName": "??0SelectorListNode@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "SelectorListNode::prev"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'AttributeListNode::next' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 161,
+                  "startColumn": 1,
+                  "endLine": 161,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "AttributeListNode::{ctor}",
+                  "decoratedName": "??0AttributeListNode@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "AttributeListNode::next"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'AttributeListNode::prev' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+                },
+                "region": {
+                  "startLine": 161,
+                  "startColumn": 1,
+                  "endLine": 161,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "AttributeListNode::{ctor}",
+                  "decoratedName": "??0AttributeListNode@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "AttributeListNode::prev"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.34.31937.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/Wojtek/Dropbox/Studia/Semestr 2/AiSD/project_1_vs/project_1_vs.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "5b04fdd94e8cf82216e3b5caf86edc72bc959ce6d7a26759e6c23015b17daa39"
+          }
+        }
+      ]
+    }
+  ]
+}

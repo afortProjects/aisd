@@ -9,100 +9,6 @@ struct BlockListNode;
 struct SectionNode;
 struct SelectorListNode;
 struct AttributeListNode;
-class BlockList;
-class SelectorList;
-class AttributeList;
-
-struct BlockListNode {
-    BlockListNode* prev = NULL;
-    BlockListNode* next = NULL;
-    SectionNode* blocks[AMOUNT_OF_BLOCKS_IN_BLOCK_LIST];
-    int currentAmountOfBlocks = 0;
-};
-
-struct SectionNode {
-    SelectorList* selectorList;
-    AttributeList* attributeList;
-    int counter;
-};
-
-struct SelectorListNode {
-    SelectorListNode* prev;
-    SelectorListNode* next;
-    char* name;
-};
-
-
-struct AttributeListNode {
-    AttributeListNode* prev;
-    AttributeListNode* next;
-    char* name;
-    char* value;
-};
-
-
-
-class BlockList {
-public:
-    struct BlockListNode* headNode;
-    struct BlockListNode* tailNode;
-    int amountOfBlocks = 0;
-public:
-    BlockList(struct BlockListNode* head) {
-        headNode = head;
-    }
-
-    int length() {
-        return amountOfBlocks;
-    }
-
-    void addNewBlockToList(BlockListNode* nextBlockListNode) {
-        struct BlockListNode* last = headNode;
-        while (last->next != NULL) {
-            last = last->next;
-        }
-        last->next = nextBlockListNode;
-        nextBlockListNode->prev = last;
-        amountOfBlocks++;
-    }
-
-    friend ostream& operator<<(ostream& cout, BlockList list) {
-        BlockListNode* temp = list.headNode;
-        if (temp != NULL) {
-            cout << "The list contains: ";
-            while (temp != NULL) {
-                cout << temp->currentAmountOfBlocks << " ";
-                temp = temp->next;
-            }
-            cout << endl;
-        }
-        else {
-            cout << "The list is empty.\n";
-        
-        }
-        return cout;
-    }
-};
-
-class AttributeList {
-public:
-    AttributeListNode* headNode;
-public:
-    AttributeList() {
-        headNode = NULL;
-    }
-};
-
-class SelectorList {
-public:
-    SelectorListNode* headNode;
-public:
-    SelectorList() {
-        headNode = NULL;
-    }
-};
-
-
 class myString
 {
 private:
@@ -147,6 +53,10 @@ public:
         return *this;
     }
 
+    bool operator!=(myString& stringObject2) {
+        return strcmp(buffer, stringObject2.buffer);
+    }
+
     myString operator+(const char& character)
     {
         myString newString;
@@ -170,7 +80,7 @@ public:
         return newString;
     }
 
-    myString operator+=(const char& character)
+    void operator+=(const char& character)
     {
         myString newString;
         newString.size = this->size + 1;
@@ -181,10 +91,11 @@ public:
         newString.buffer[this->size + 1] = '\0';
 
         this->size = newString.size;
+
         strcpy(this->buffer, newString.buffer);
     }
 
-    myString operator+=(const myString& stringToConcatenate)
+    void operator+=(const myString& stringToConcatenate)
     {
         myString newString;
         newString.size = this->size + stringToConcatenate.size;
@@ -206,12 +117,6 @@ public:
     const char* str() const {
         return buffer;
     }
-    ~myString() {
-        if (buffer != nullptr) {
-            delete[] buffer;
-        }
-        size = 0;
-    }
 
     friend ostream& operator<<(std::ostream& cout, const myString& obj) {
         cout << obj.str() << endl;
@@ -220,54 +125,308 @@ public:
 
 };
 
+template<typename T> class DoubleLinkedList;
+
+struct SectionNode {
+    DoubleLinkedList<SelectorListNode>* selectorList = NULL;
+    DoubleLinkedList<AttributeListNode>* attributeList = NULL;
+    int counter = 0;
+};
+
+struct BlockListNode {
+    BlockListNode* prev = NULL;
+    BlockListNode* next = NULL;
+    SectionNode* sections = new SectionNode[AMOUNT_OF_BLOCKS_IN_BLOCK_LIST];
+    int currentAmountOfSections = 0;
+};
+
+
+struct SelectorListNode {
+    SelectorListNode* prev = nullptr;
+    SelectorListNode* next = nullptr;
+    myString name = { "" };
+};
+
+
+struct AttributeListNode {
+    AttributeListNode* prev;
+    AttributeListNode* next;
+    myString name = { "" };
+    myString value = { "" };
+};
+
+
+
+template<typename T> class DoubleLinkedList {
+public:
+    T* headNode = nullptr;
+    int amountOfBlocks = 0;
+    bool wasHeadNodeSet = false;
+public:
+    //TODO: Write destructor
+    DoubleLinkedList() {
+        T* head = new T;
+        head->prev = NULL;
+        head->next = NULL;
+        wasHeadNodeSet = false;
+        headNode = head;
+    }
+
+
+    int length() {
+        return amountOfBlocks;
+    }
+
+    void addNewBlockToList(T* nextBlockListNode) {
+        //Checking if first place in list is available
+        if (!wasHeadNodeSet) {
+            nextBlockListNode->next = NULL;
+            nextBlockListNode->prev = NULL;
+
+            headNode = nextBlockListNode;
+            wasHeadNodeSet = true;
+        }
+        else {
+            T* last = headNode;
+            while (last->next != NULL) {
+                last = last->next;
+            }
+            last->next = nextBlockListNode;
+            nextBlockListNode->prev = last;
+            amountOfBlocks++;
+        }
+
+    }
+
+    T* getLastNode() {
+        T* last = headNode;
+        while (last->next != NULL) {
+            last = last->next;
+        }
+        return last;
+    }
+
+ 
+
+    friend ostream& operator<<(ostream& cout, T list) {
+        T* temp = list.headNode;
+        if (temp != NULL) {
+            cout << "The list contains: ";
+            while (temp != NULL) {
+                cout << temp->currentAmountOfSections << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+        else {
+            cout << "The list is empty.\n";
+
+        }
+        return cout;
+    }
+};
+
+
+template <class T> void printOutBlockList(T* blockList) {
+    BlockListNode* temp = blockList->headNode;
+    if (temp != NULL) {
+        cout << "The list contains: ";
+        while (temp != NULL) {
+            cout << temp->currentAmountOfSections << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+    else {
+        cout << "The list is empty.\n";
+
+    }
+}
+
+template <class T> void printAttributeList(T* attributeList) {
+    AttributeListNode* temp = attributeList->headNode;
+    if (temp != NULL) {
+        cout << "The list contains: ";
+        while (temp != NULL) {
+            cout << temp->name << ":" << temp->value;
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+    else {
+        cout << "The list is empty.\n";
+
+    }
+}
+
+template <class T> void printSelectorList(T* selectorList) {
+    SelectorListNode* temp = selectorList->headNode;
+    if (temp != NULL) {
+        cout << "The list contains: ";
+        while (temp != NULL) {
+            cout << temp->name;
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+    else {
+        cout << "The list is empty.\n";
+
+    }
+}
+
+template<class T> void printOutSelectorsAndAttributes(T* blockList) {
+    BlockListNode* temp = blockList->headNode;
+    if (temp != NULL) {
+        cout << "The list contains: ";
+        while (temp != NULL) {
+            for (int i = 0; i < temp->currentAmountOfSections; i++) {
+                if (temp->sections[i].attributeList->headNode != nullptr && temp->sections[i].selectorList->headNode != nullptr) {
+                    printSelectorList(temp->sections[i].selectorList);
+                    printAttributeList(temp->sections[i].attributeList);
+
+                }
+            }
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+    else {
+        cout << "The list is empty.\n";
+
+    }
+}
+
+template <class T> void setHeadNodesToNullValues(T* list) {
+    list->headNode = NULL;
+}
+
 int main() {
     char character;
-    myString input = { "" };
-
-    //Create new Block List
-    //BlockListNode newBlockListNode;
-    //newBlockListNode.currentAmountOfBlocks = 3;
-    //BlockList blockList(&newBlockListNode);
-
-    //BlockListNode newBlockListNode2;
-    //newBlockListNode2.currentAmountOfBlocks = 5;
-    //blockList.addNewBlockToList(&newBlockListNode2);
-    //cout << blockList;
-    //BlockListNode newBlockListNode2;
-    //newBlockListNode2.currentAmountOfBlocks = 51;
-    //blockList.addNewBlockToList(&newBlockListNode2);
-    //BlockListNode newBlockListNode3;
-    //newBlockListNode3.currentAmountOfBlocks = 522;
-    //blockList.addNewBlockToList(&newBlockListNode3);
-
-    // blockList.printListOfBlocks();
-    // BlockListNode* temp = blockList.headNode;
-    //         if(temp != NULL) {
-    //             cout<<"The list contains: ";
-    //             while(temp != NULL) {
-    //                 cout<<temp->currentAmountOfBlocks<<" ";
-    //                 temp = temp->next;
-    //             }
-    //             cout<<endl;
-    //         } else {
-    //             cout<<"The list is empty.\n";
-    //         }
-
+    myString selectorInput = { "" };
+    myString attributeInput = { "" };
+    bool wasNewSectionDetected = false;
     //Initialize blockList
-    BlockListNode firstBlockListNode;
-    BlockList blockList(&firstBlockListNode);
-     while (cin>>character) {
-         if(character == '{') {
-              //Input contains selectors
-              if(blockList.length() == 8) {
-                  //We need to create new block
-                  BlockListNode newBlockListNode;
-                  blockList.addNewBlockToList(&newBlockListNode);
-              }
+    DoubleLinkedList<BlockListNode> blockList;
+    while (cin >> character) {
+        if (character == '{') {
+            cout << "Wczytano {" << endl;
+            wasNewSectionDetected = true;
+        }
+        else if (character == '}') {
+            cout << "Wczytano }" << endl;
+            BlockListNode* currentBlock = blockList.getLastNode();
+            if (currentBlock->currentAmountOfSections == 8) {
+                //We need to create new block
+                BlockListNode* newBlockListNode = new BlockListNode;
+                blockList.addNewBlockToList(newBlockListNode);
+                currentBlock = blockList.getLastNode();
+            }
+            SectionNode currentSection = currentBlock->sections[currentBlock->currentAmountOfSections];
+            //Create new selector, attribute list, and fill it with data
+            DoubleLinkedList<SelectorListNode>* selectorList = new DoubleLinkedList<SelectorListNode>;
+            setHeadNodesToNullValues(selectorList);
+            
+            cout << selectorList->wasHeadNodeSet << endl;
+            myString temp = "";
+            for (int i = 0; i < selectorInput.length(); i++) {
+                //todo: add handling for example + in css
+                if (selectorInput[i] == ',') {
+                    SelectorListNode* newNode = new SelectorListNode;
+                    newNode->next = NULL;
+                    newNode->prev = NULL;
 
-         }
-         input += character;
+                    newNode->name = temp;
+                    selectorList->addNewBlockToList(newNode);
+                    cout << temp << endl;
+                    temp = "";
+                }
+                else {
+                    temp = temp + selectorInput[i];
+                }
+            }
+            myString emptyString = { "" };
+            cout << "s" << selectorInput;
+            cout << "a" << attributeInput;
+            if (temp != emptyString) {
+                SelectorListNode* newNode = new SelectorListNode;
+                newNode->next = NULL;
+                newNode->prev = NULL;
+                newNode->name = temp;
+                selectorList->addNewBlockToList(newNode);
+                cout << "qwe" << temp << endl;
+            }
+            temp = "";
+            DoubleLinkedList<AttributeListNode>* attributeList = new DoubleLinkedList<AttributeListNode>;
+            setHeadNodesToNullValues(attributeList);
+            int counter = 0;
+            for (int i = 0; i < attributeInput.length(); i++) {
+                //todo: add handling for example + in css
+                if (attributeInput[i] == ';') {
+                    AttributeListNode* newNode = new AttributeListNode;
+                    newNode->next = NULL;
+                    newNode->prev = NULL;
+                    myString name = "";
+                    myString value = "";
+                    bool isNameInputFinished = false;
+                    for (int j = counter; j < i; j++) {
+                        if (attributeInput[j] == ':') {
+                            isNameInputFinished = true;
+                            counter = j;
+                        }
+                        if (attributeInput[j] != ':') {
+                            isNameInputFinished == false ? name += attributeInput[j] : value += attributeInput[j];
 
-     }
+                        }
+                    }
+
+                    newNode->name = name;
+                    newNode->value = value;
+
+                    attributeList->addNewBlockToList(newNode);
+                        temp = "";
+                }
+                else {
+                    temp += attributeInput[i];
+                }
+            }
+            if (temp != emptyString) {
+                AttributeListNode* newNode = new AttributeListNode;
+                newNode->next = NULL;
+                newNode->prev = NULL;
+                myString name = "";
+                myString value = "";
+                bool isNameInputFinished = false;
+                for (int j = 0; j < temp.length(); j++) {
+                    if (attributeInput[j] == ':') {
+                        isNameInputFinished = true;
+                    }
+                    if (attributeInput[j] != ':') {
+                        isNameInputFinished == false ? name += attributeInput[j] : value += attributeInput[j];
+
+                    }
+                }
+                newNode->name = name;
+                newNode->value = value;
+                attributeList->addNewBlockToList(newNode);
+                cout << "t2" << temp << endl;
+            }
+            currentSection.attributeList = attributeList;
+            currentSection.selectorList = selectorList;
+            currentBlock->sections[currentBlock->currentAmountOfSections] = currentSection;
+            currentBlock->currentAmountOfSections++;
+            wasNewSectionDetected = false;
+            selectorInput = "";
+            attributeInput = "";
+        }
+        if (character != '}' && character != '{') {
+            wasNewSectionDetected == false ? selectorInput += character : attributeInput += character;
+        }   
+        //printAttributeList(blockList.getLastNode()->sections[0].attributeList);
+        //printOutBlockList(&blockList);
+    }
+     printOutSelectorsAndAttributes(&blockList);
+    //cout << blockList.getLastNode()->sections[0].attributeList->/*headNode*/;
+
     return 0;
 }

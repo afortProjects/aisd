@@ -1,2 +1,10 @@
-The list contains: 3 5 
-The list contains: 3 5 
+Wczytano {
+Wczytano }
+0
+s#breadcrumb
+awidth:80%;font-size:9pt;
+qwe#breadcrumb
+
+Wczytano {
+Wczytano }
+0
