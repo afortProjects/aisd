@@ -30,12 +30,14 @@ public:
         strcpy(buffer, stringObject.buffer);
     }
 
-    myString(myString&& stringObject)
+    myString(myString&& stringObject) noexcept
     {
         size = stringObject.size;
         buffer = stringObject.buffer;
         stringObject.buffer = nullptr;
+        stringObject.size = 0;
     }
+
 
     myString& operator=(const myString& stringObject)
     {
@@ -45,11 +47,12 @@ public:
         return *this;
     }
 
-    myString& operator=(myString&& stringObject)
+    myString& operator=(myString&& stringObject) noexcept
     {
         size = stringObject.size;
         buffer = stringObject.buffer;
         stringObject.buffer = nullptr;
+        stringObject.size = 0;
         return *this;
     }
 
@@ -76,11 +79,11 @@ public:
         newString.size = this->size + stringToConcatenate.size;
         newString.buffer = new char[newString.size + 1];
         strcpy(newString.buffer, this->buffer);
-        strcpy(newString.buffer + this->size, stringToConcatenate.buffer);
+        strcat(newString.buffer, stringToConcatenate.buffer);
         return newString;
     }
 
-    void operator+=(const char& character)
+    myString& operator+=(const char& character)
     {
         myString newString;
         newString.size = this->size + 1;
@@ -88,34 +91,36 @@ public:
 
         strcpy(newString.buffer, this->buffer);
         newString.buffer[this->size] = character;
-        newString.buffer[this->size + 1] = '\0';
 
         this->size = newString.size;
 
         strcpy(this->buffer, newString.buffer);
+        return *this;
     }
 
-    void operator+=(const myString& stringToConcatenate)
+    myString& operator+=(const myString& stringToConcatenate)
     {
         myString newString;
         newString.size = this->size + stringToConcatenate.size;
         newString.buffer = new char[newString.size + 1];
         strcpy(newString.buffer, this->buffer);
-        strcpy(newString.buffer + this->size, stringToConcatenate.buffer);
+        strcat(newString.buffer, stringToConcatenate.buffer);
 
         this->size = newString.size;
         strcpy(this->buffer, newString.buffer);
+        return *this;
+
     }
 
     char operator[](const int index) {
-        return buffer[index];
+        return this->buffer[index];
     }
 
     unsigned int length() {
-        return size;
+        return this->size;
     }
     const char* str() const {
-        return buffer;
+        return this->buffer;
     }
 
     friend ostream& operator<<(std::ostream& cout, const myString& obj) {
@@ -123,6 +128,12 @@ public:
         return cout;
     }
 
+    ~myString() {
+        if (buffer != nullptr) {
+            delete [] buffer;
+            size = 0;
+        }
+    }
 };
 
 template<typename T> class DoubleLinkedList;
@@ -303,6 +314,7 @@ template <class T> void setHeadNodesToNullValues(T* list) {
 
 int main() {
     char character;
+    myString emptyStringToClear("");
     myString selectorInput = { "" };
     myString attributeInput = { "" };
     bool wasNewSectionDetected = false;
@@ -327,19 +339,17 @@ int main() {
             DoubleLinkedList<SelectorListNode>* selectorList = new DoubleLinkedList<SelectorListNode>;
             setHeadNodesToNullValues(selectorList);
             
-            cout << selectorList->wasHeadNodeSet << endl;
-            myString temp = "";
+            myString temp("");
             for (int i = 0; i < selectorInput.length(); i++) {
                 //todo: add handling for example + in css
                 if (selectorInput[i] == ',') {
                     SelectorListNode* newNode = new SelectorListNode;
                     newNode->next = NULL;
                     newNode->prev = NULL;
-
                     newNode->name = temp;
                     selectorList->addNewBlockToList(newNode);
                     cout << temp << endl;
-                    temp = "";
+                    temp = emptyStringToClear;
                 }
                 else {
                     temp = temp + selectorInput[i];
@@ -356,7 +366,9 @@ int main() {
                 selectorList->addNewBlockToList(newNode);
                 cout << "qwe" << temp << endl;
             }
-            temp = "";
+
+            temp = emptyStringToClear;
+
             DoubleLinkedList<AttributeListNode>* attributeList = new DoubleLinkedList<AttributeListNode>;
             setHeadNodesToNullValues(attributeList);
             int counter = 0;
@@ -366,43 +378,44 @@ int main() {
                     AttributeListNode* newNode = new AttributeListNode;
                     newNode->next = NULL;
                     newNode->prev = NULL;
-                    myString name = "";
-                    myString value = "";
+                    myString name = { "" };
+                    myString value = { "" };
                     bool isNameInputFinished = false;
                     for (int j = counter; j < i; j++) {
                         if (attributeInput[j] == ':') {
                             isNameInputFinished = true;
-                            counter = j;
                         }
-                        if (attributeInput[j] != ':') {
-                            isNameInputFinished == false ? name += attributeInput[j] : value += attributeInput[j];
+                        else {
+                            isNameInputFinished == false ? name = name + attributeInput[j] : value = value + attributeInput[j];
 
                         }
                     }
+                    counter = i;
 
                     newNode->name = name;
                     newNode->value = value;
 
                     attributeList->addNewBlockToList(newNode);
-                        temp = "";
+                    temp = emptyStringToClear;
+
                 }
                 else {
-                    temp += attributeInput[i];
+                    temp = temp + attributeInput[i];
                 }
             }
             if (temp != emptyString) {
                 AttributeListNode* newNode = new AttributeListNode;
                 newNode->next = NULL;
                 newNode->prev = NULL;
-                myString name = "";
-                myString value = "";
+                myString name = { "" };
+                myString value = { "" };
                 bool isNameInputFinished = false;
                 for (int j = 0; j < temp.length(); j++) {
                     if (attributeInput[j] == ':') {
                         isNameInputFinished = true;
                     }
-                    if (attributeInput[j] != ':') {
-                        isNameInputFinished == false ? name += attributeInput[j] : value += attributeInput[j];
+                    else {
+                        isNameInputFinished == false ? name = name + attributeInput[j] : value = value + attributeInput[j];
 
                     }
                 }
@@ -416,11 +429,11 @@ int main() {
             currentBlock->sections[currentBlock->currentAmountOfSections] = currentSection;
             currentBlock->currentAmountOfSections++;
             wasNewSectionDetected = false;
-            selectorInput = "";
-            attributeInput = "";
+            selectorInput = { "" };
+            attributeInput = { "" };
         }
         if (character != '}' && character != '{') {
-            wasNewSectionDetected == false ? selectorInput += character : attributeInput += character;
+            wasNewSectionDetected == false ? selectorInput = selectorInput + character : attributeInput = attributeInput + character;
         }   
         //printAttributeList(blockList.getLastNode()->sections[0].attributeList);
         //printOutBlockList(&blockList);
