@@ -256,40 +256,43 @@ template <class T> void printOutBlockList(T* blockList) {
 
 template <class T> void printAttributeList(T* attributeList) {
     AttributeListNode* temp = attributeList->headNode;
+    myString output = { "" };
     if (temp != NULL) {
-        cout << "The list contains: ";
         while (temp != NULL) {
-            cout << temp->name << ":" << temp->value;
-            temp = temp->next;
+                output = output + temp->name;
+                output = output + ":";
+                output = output + temp->value;
+                output = output + " ";
+                temp = temp->next;
         }
-        cout << endl;
     }
     else {
         cout << "The list is empty.\n";
 
     }
+    cout << "Attributes: " << output << endl;
 }
 
 template <class T> void printSelectorList(T* selectorList) {
     SelectorListNode* temp = selectorList->headNode;
+    myString output = { "" };
     if (temp != NULL) {
-        cout << "The list contains: ";
         while (temp != NULL) {
-            cout << temp->name;
+            output = output + temp->name;
+            output = output + " ";
             temp = temp->next;
         }
-        cout << endl;
     }
     else {
         cout << "The list is empty.\n";
 
     }
+    cout << "Selectors: " << output << endl;
 }
 
 template<class T> void printOutSelectorsAndAttributes(T* blockList) {
     BlockListNode* temp = blockList->headNode;
     if (temp != NULL) {
-        cout << "The list contains: ";
         while (temp != NULL) {
             for (int i = 0; i < temp->currentAmountOfSections; i++) {
                 if (temp->sections[i].attributeList->headNode != nullptr && temp->sections[i].selectorList->headNode != nullptr) {
@@ -300,16 +303,11 @@ template<class T> void printOutSelectorsAndAttributes(T* blockList) {
             }
             temp = temp->next;
         }
-        cout << endl;
     }
     else {
         cout << "The list is empty.\n";
 
     }
-}
-
-template <class T> void setHeadNodesToNullValues(T* list) {
-    list->headNode = NULL;
 }
 
 int main() {
@@ -318,15 +316,12 @@ int main() {
     myString selectorInput = { "" };
     myString attributeInput = { "" };
     bool wasNewSectionDetected = false;
-    //Initialize blockList
     DoubleLinkedList<BlockListNode> blockList;
     while (cin >> character) {
         if (character == '{') {
-            cout << "Wczytano {" << endl;
             wasNewSectionDetected = true;
         }
         else if (character == '}') {
-            cout << "Wczytano }" << endl;
             BlockListNode* currentBlock = blockList.getLastNode();
             if (currentBlock->currentAmountOfSections == 8) {
                 //We need to create new block
@@ -337,44 +332,33 @@ int main() {
             SectionNode currentSection = currentBlock->sections[currentBlock->currentAmountOfSections];
             //Create new selector, attribute list, and fill it with data
             DoubleLinkedList<SelectorListNode>* selectorList = new DoubleLinkedList<SelectorListNode>;
-            setHeadNodesToNullValues(selectorList);
-            
+
             myString temp("");
+            myString emptyString = { "" };
+
             for (int i = 0; i < selectorInput.length(); i++) {
                 //todo: add handling for example + in css
-                if (selectorInput[i] == ',') {
+                if (selectorInput[i] == ',' || (i == selectorInput.length() - 1 && temp != emptyString)) {
+                    if (selectorInput.length() - 1 == i) temp = temp + selectorInput[i];
                     SelectorListNode* newNode = new SelectorListNode;
                     newNode->next = NULL;
                     newNode->prev = NULL;
                     newNode->name = temp;
                     selectorList->addNewBlockToList(newNode);
-                    cout << temp << endl;
                     temp = emptyStringToClear;
                 }
                 else {
                     temp = temp + selectorInput[i];
                 }
             }
-            myString emptyString = { "" };
-            cout << "s" << selectorInput;
-            cout << "a" << attributeInput;
-            if (temp != emptyString) {
-                SelectorListNode* newNode = new SelectorListNode;
-                newNode->next = NULL;
-                newNode->prev = NULL;
-                newNode->name = temp;
-                selectorList->addNewBlockToList(newNode);
-                cout << "qwe" << temp << endl;
-            }
-
             temp = emptyStringToClear;
 
             DoubleLinkedList<AttributeListNode>* attributeList = new DoubleLinkedList<AttributeListNode>;
-            setHeadNodesToNullValues(attributeList);
             int counter = 0;
             for (int i = 0; i < attributeInput.length(); i++) {
                 //todo: add handling for example + in css
-                if (attributeInput[i] == ';') {
+                if (attributeInput[i] == ';' || (i == attributeInput.length() -1 && temp != emptyString)) {
+                    if (i == attributeInput.length() - 1 && attributeInput[i] != ';') temp = temp + attributeInput[i];
                     AttributeListNode* newNode = new AttributeListNode;
                     newNode->next = NULL;
                     newNode->prev = NULL;
@@ -386,7 +370,8 @@ int main() {
                             isNameInputFinished = true;
                         }
                         else {
-                            isNameInputFinished == false ? name = name + attributeInput[j] : value = value + attributeInput[j];
+                            if(attributeInput[j] != ';')
+                                isNameInputFinished == false ? name = name + attributeInput[j] : value = value + attributeInput[j];
 
                         }
                     }
@@ -403,27 +388,7 @@ int main() {
                     temp = temp + attributeInput[i];
                 }
             }
-            if (temp != emptyString) {
-                AttributeListNode* newNode = new AttributeListNode;
-                newNode->next = NULL;
-                newNode->prev = NULL;
-                myString name = { "" };
-                myString value = { "" };
-                bool isNameInputFinished = false;
-                for (int j = 0; j < temp.length(); j++) {
-                    if (attributeInput[j] == ':') {
-                        isNameInputFinished = true;
-                    }
-                    else {
-                        isNameInputFinished == false ? name = name + attributeInput[j] : value = value + attributeInput[j];
-
-                    }
-                }
-                newNode->name = name;
-                newNode->value = value;
-                attributeList->addNewBlockToList(newNode);
-                cout << "t2" << temp << endl;
-            }
+            
             currentSection.attributeList = attributeList;
             currentSection.selectorList = selectorList;
             currentBlock->sections[currentBlock->currentAmountOfSections] = currentSection;
@@ -434,12 +399,9 @@ int main() {
         }
         if (character != '}' && character != '{') {
             wasNewSectionDetected == false ? selectorInput = selectorInput + character : attributeInput = attributeInput + character;
-        }   
-        //printAttributeList(blockList.getLastNode()->sections[0].attributeList);
-        //printOutBlockList(&blockList);
+        } 
     }
      printOutSelectorsAndAttributes(&blockList);
-    //cout << blockList.getLastNode()->sections[0].attributeList->/*headNode*/;
 
     return 0;
 }

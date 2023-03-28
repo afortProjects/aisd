@@ -1,10 +1,28 @@
-Wczytano {
-Wczytano }
-0
-s#breadcrumb
-awidth:80%;font-size:9pt;
-qwe#breadcrumb
-
-Wczytano {
-Wczytano }
-0
+Selectors: #breadcrumb
+ Attributes: width
+:80%
+ ;font-size
+:9pt
+ Selectors: h1
+ body
+ Attributes: min-width
+:780px
+ ;margin
+:0
+ ;padding
+:0
+ ;font-family
+:"TrebuchetMS","LucidaGrande",Arial
+ ;font-size
+:85%
+ ;color
+:#666666
+ Selectors: h1
+ h2
+ h3
+ h4
+ h5
+ h6
+ Attributes: color
+:#0066CB
+ 

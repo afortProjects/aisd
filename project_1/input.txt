@@ -1,7 +1,7 @@
-#breadcrumb 
+#breadcrumb
 {
-	width: 80%;
-	font-size: 9pt;
+width: 80%;
+font-size: 9pt;
 }
 h1, body {
 min-width: 780px;
@@ -11,3 +11,4 @@ font-family: "Trebuchet MS", "Lucida Grande", Arial;
 font-size: 85%;
 color: #666666;
 }
+h1, h2, h3, h4, h5, h6 {color: #0066CB;}
