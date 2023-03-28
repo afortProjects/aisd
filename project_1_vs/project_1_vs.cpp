@@ -9,134 +9,148 @@ struct BlockListNode;
 struct SectionNode;
 struct SelectorListNode;
 struct AttributeListNode;
+template<typename T> class DoubleLinkedList;
+
+
+
 class myString
 {
-private:
-    char* buffer = nullptr;
-    unsigned int size = 0;
-public:
-    myString() : buffer(nullptr), size(0) {};
+    private:
+        char* buffer = nullptr;
+        unsigned int size = 0;
+    public:
+        myString() : buffer(nullptr), size(0) {};
 
-    myString(const char* newBuffer) {
-        size = strlen(newBuffer);
-        buffer = new char[size + 1];
-        strcpy(buffer, newBuffer);
-    };
+        myString(const char* newBuffer) {
+            size = strlen(newBuffer);
+            buffer = new char[size + 1];
+            strcpy(buffer, newBuffer);
+        };
 
-    myString(const myString& stringObject)
-    {
-        size = stringObject.size;
-        buffer = new char[size + 1];
-        strcpy(buffer, stringObject.buffer);
-    }
-
-    myString(myString&& stringObject) noexcept
-    {
-        size = stringObject.size;
-        buffer = stringObject.buffer;
-        stringObject.buffer = nullptr;
-        stringObject.size = 0;
-    }
-
-
-    myString& operator=(const myString& stringObject)
-    {
-        size = stringObject.size;
-        buffer = new char[size + 1];
-        strcpy(buffer, stringObject.buffer);
-        return *this;
-    }
-
-    myString& operator=(myString&& stringObject) noexcept
-    {
-        size = stringObject.size;
-        buffer = stringObject.buffer;
-        stringObject.buffer = nullptr;
-        stringObject.size = 0;
-        return *this;
-    }
-
-    bool operator!=(myString& stringObject2) {
-        return strcmp(buffer, stringObject2.buffer);
-    }
-
-    myString operator+(const char& character)
-    {
-        myString newString;
-        newString.size = this->size + 1;
-        newString.buffer = new char[newString.size + 1];
-
-        strcpy(newString.buffer, this->buffer);
-        newString.buffer[this->size] = character;
-        newString.buffer[this->size + 1] = '\0';
-
-        return newString;
-    }
-
-    myString operator+(const myString& stringToConcatenate)
-    {
-        myString newString;
-        newString.size = this->size + stringToConcatenate.size;
-        newString.buffer = new char[newString.size + 1];
-        strcpy(newString.buffer, this->buffer);
-        strcat(newString.buffer, stringToConcatenate.buffer);
-        return newString;
-    }
-
-    myString& operator+=(const char& character)
-    {
-        myString newString;
-        newString.size = this->size + 1;
-        newString.buffer = new char[newString.size + 1];
-
-        strcpy(newString.buffer, this->buffer);
-        newString.buffer[this->size] = character;
-
-        this->size = newString.size;
-
-        strcpy(this->buffer, newString.buffer);
-        return *this;
-    }
-
-    myString& operator+=(const myString& stringToConcatenate)
-    {
-        myString newString;
-        newString.size = this->size + stringToConcatenate.size;
-        newString.buffer = new char[newString.size + 1];
-        strcpy(newString.buffer, this->buffer);
-        strcat(newString.buffer, stringToConcatenate.buffer);
-
-        this->size = newString.size;
-        strcpy(this->buffer, newString.buffer);
-        return *this;
-
-    }
-
-    char operator[](const int index) {
-        return this->buffer[index];
-    }
-
-    unsigned int length() {
-        return this->size;
-    }
-    const char* str() const {
-        return this->buffer;
-    }
-
-    friend ostream& operator<<(std::ostream& cout, const myString& obj) {
-        cout << obj.str() << endl;
-        return cout;
-    }
-
-    ~myString() {
-        if (buffer != nullptr) {
-            delete [] buffer;
-            size = 0;
+        myString(const myString& stringObject)
+        {
+            size = stringObject.size;
+            buffer = new char[size + 1];
+            strcpy(buffer, stringObject.buffer);
         }
-    }
-};
 
-template<typename T> class DoubleLinkedList;
+        myString(myString&& stringObject) noexcept
+        {
+            size = stringObject.size;
+            buffer = stringObject.buffer;
+            stringObject.buffer = nullptr;
+            stringObject.size = 0;
+        }
+
+
+        myString& operator=(const myString& stringObject)
+        {
+            size = stringObject.size;
+            buffer = new char[size + 1];
+            strcpy(buffer, stringObject.buffer);
+            return *this;
+        }
+
+        myString& operator=(myString&& stringObject) noexcept
+        {
+            size = stringObject.size;
+            buffer = stringObject.buffer;
+            stringObject.buffer = nullptr;
+            stringObject.size = 0;
+            return *this;
+        }
+
+        bool operator!=(myString& stringObject2) {
+            return strcmp(buffer, stringObject2.buffer);
+        }
+
+        bool operator==(const char* arr) {
+            return strcmp(buffer, arr) == 0;
+        }
+
+        myString operator+(const char& character)
+        {
+            myString newString;
+            newString.size = this->size + 1;
+            newString.buffer = new char[newString.size + 1];
+
+            strcpy(newString.buffer, this->buffer);
+            newString.buffer[this->size] = character;
+            newString.buffer[this->size + 1] = '\0';
+
+            return newString;
+        }
+
+        myString operator+(const myString& stringToConcatenate)
+        {
+            myString newString;
+            newString.size = this->size + stringToConcatenate.size;
+            newString.buffer = new char[newString.size + 1];
+            strcpy(newString.buffer, this->buffer);
+            strcat(newString.buffer, stringToConcatenate.buffer);
+            return newString;
+        }
+
+        myString& operator+=(const char& character)
+        {
+            myString newString;
+            newString.size = this->size + 1;
+            newString.buffer = new char[newString.size + 1];
+
+            strcpy(newString.buffer, this->buffer);
+            newString.buffer[this->size] = character;
+            newString.buffer[this->size + 1] = '\0';
+
+            if (buffer != nullptr)
+                delete[] buffer;
+        
+            this->size = newString.size;
+            this->buffer = new char[this->size + 1];
+            strcpy(this->buffer, newString.buffer);
+            return *this;
+        }
+
+        myString& operator+=(const myString& stringToConcatenate)
+        {
+            myString newString;
+            newString.size = this->size + stringToConcatenate.size;
+            newString.buffer = new char[newString.size + 1];
+            strcpy(newString.buffer, this->buffer);
+            strcat(newString.buffer, stringToConcatenate.buffer);
+
+            if (buffer != nullptr)
+                delete[] buffer;
+
+            this->size = newString.size;
+            this->buffer = new char[newString.size + 1];
+            strcpy(this->buffer, newString.buffer);
+            return *this;
+
+        }
+
+        char operator[](const int index) {
+            return this->buffer[index];
+        }
+
+        unsigned int length() {
+            return this->size;
+        }
+        const char* str() const {
+            return this->buffer;
+        }
+
+        friend ostream& operator<<(std::ostream& cout, const myString& obj) {
+            cout << obj.str() << endl;
+            return cout;
+        }
+
+        ~myString() {
+            if (buffer != nullptr) {
+                delete [] buffer;
+                size = 0;
+            }
+        }
+};
 
 struct SectionNode {
     DoubleLinkedList<SelectorListNode>* selectorList = NULL;
@@ -183,19 +197,17 @@ public:
         headNode = head;
     }
 
-
     int length() {
         return amountOfBlocks;
     }
 
     void addNewBlockToList(T* nextBlockListNode) {
-        //Checking if first place in list is available
-        if (!wasHeadNodeSet) {
-            nextBlockListNode->next = NULL;
-            nextBlockListNode->prev = NULL;
-
+        if (amountOfBlocks == 0) {
             headNode = nextBlockListNode;
-            wasHeadNodeSet = true;
+            headNode->next = NULL;
+            headNode->prev = NULL;
+            amountOfBlocks++;
+
         }
         else {
             T* last = headNode;
@@ -206,7 +218,6 @@ public:
             nextBlockListNode->prev = last;
             amountOfBlocks++;
         }
-
     }
 
     T* getLastNode() {
@@ -217,24 +228,6 @@ public:
         return last;
     }
 
- 
-
-    friend ostream& operator<<(ostream& cout, T list) {
-        T* temp = list.headNode;
-        if (temp != NULL) {
-            cout << "The list contains: ";
-            while (temp != NULL) {
-                cout << temp->currentAmountOfSections << " ";
-                temp = temp->next;
-            }
-            cout << endl;
-        }
-        else {
-            cout << "The list is empty.\n";
-
-        }
-        return cout;
-    }
 };
 
 
@@ -310,36 +303,37 @@ template<class T> void printOutSelectorsAndAttributes(T* blockList) {
     }
 }
 
-int main() {
+void getCSSInput(DoubleLinkedList<BlockListNode>& blockList) {
     char character;
     myString emptyStringToClear("");
     myString selectorInput = { "" };
     myString attributeInput = { "" };
+    myString input = { "" };
     bool wasNewSectionDetected = false;
-    DoubleLinkedList<BlockListNode> blockList;
     while (cin >> character) {
+        input += character;
         if (character == '{') {
             wasNewSectionDetected = true;
         }
         else if (character == '}') {
             BlockListNode* currentBlock = blockList.getLastNode();
+            SectionNode currentSection = currentBlock->sections[currentBlock->currentAmountOfSections];
+            DoubleLinkedList<SelectorListNode>* selectorList = new DoubleLinkedList<SelectorListNode>;
+            DoubleLinkedList<AttributeListNode>* attributeList = new DoubleLinkedList<AttributeListNode>;
+            myString temp("");
+            myString emptyString = { "" };
+            int counter = 0;
+
             if (currentBlock->currentAmountOfSections == 8) {
-                //We need to create new block
                 BlockListNode* newBlockListNode = new BlockListNode;
                 blockList.addNewBlockToList(newBlockListNode);
                 currentBlock = blockList.getLastNode();
             }
-            SectionNode currentSection = currentBlock->sections[currentBlock->currentAmountOfSections];
-            //Create new selector, attribute list, and fill it with data
-            DoubleLinkedList<SelectorListNode>* selectorList = new DoubleLinkedList<SelectorListNode>;
-
-            myString temp("");
-            myString emptyString = { "" };
 
             for (int i = 0; i < selectorInput.length(); i++) {
                 //todo: add handling for example + in css
                 if (selectorInput[i] == ',' || (i == selectorInput.length() - 1 && temp != emptyString)) {
-                    if (selectorInput.length() - 1 == i) temp = temp + selectorInput[i];
+                    if (selectorInput.length() - 1 == i) temp += selectorInput[i];
                     SelectorListNode* newNode = new SelectorListNode;
                     newNode->next = NULL;
                     newNode->prev = NULL;
@@ -348,17 +342,15 @@ int main() {
                     temp = emptyStringToClear;
                 }
                 else {
-                    temp = temp + selectorInput[i];
+                    temp += selectorInput[i];
                 }
             }
-            temp = emptyStringToClear;
+            temp = "";
 
-            DoubleLinkedList<AttributeListNode>* attributeList = new DoubleLinkedList<AttributeListNode>;
-            int counter = 0;
             for (int i = 0; i < attributeInput.length(); i++) {
                 //todo: add handling for example + in css
-                if (attributeInput[i] == ';' || (i == attributeInput.length() -1 && temp != emptyString)) {
-                    if (i == attributeInput.length() - 1 && attributeInput[i] != ';') temp = temp + attributeInput[i];
+                if (attributeInput[i] == ';' || (i == attributeInput.length() - 1 && temp != emptyString)) {
+                    if (i == attributeInput.length() - 1 && attributeInput[i] != ';') temp += attributeInput[i];
                     AttributeListNode* newNode = new AttributeListNode;
                     newNode->next = NULL;
                     newNode->prev = NULL;
@@ -370,8 +362,8 @@ int main() {
                             isNameInputFinished = true;
                         }
                         else {
-                            if(attributeInput[j] != ';')
-                                isNameInputFinished == false ? name = name + attributeInput[j] : value = value + attributeInput[j];
+                            if (attributeInput[j] != ';')
+                                isNameInputFinished == false ? name += attributeInput[j] : value += attributeInput[j];
 
                         }
                     }
@@ -381,27 +373,136 @@ int main() {
                     newNode->value = value;
 
                     attributeList->addNewBlockToList(newNode);
-                    temp = emptyStringToClear;
+                    temp = "";
 
                 }
                 else {
-                    temp = temp + attributeInput[i];
+                    temp += attributeInput[i];
                 }
             }
-            
+            input = "";
             currentSection.attributeList = attributeList;
             currentSection.selectorList = selectorList;
             currentBlock->sections[currentBlock->currentAmountOfSections] = currentSection;
-            currentBlock->currentAmountOfSections++;
+            currentBlock->currentAmountOfSections += 1;
             wasNewSectionDetected = false;
-            selectorInput = { "" };
-            attributeInput = { "" };
+            selectorInput = "";
+            attributeInput = "";
         }
         if (character != '}' && character != '{') {
-            wasNewSectionDetected == false ? selectorInput = selectorInput + character : attributeInput = attributeInput + character;
-        } 
+            wasNewSectionDetected == false ? selectorInput += character : attributeInput += character;
+        }
+        if(input == "????") {
+            break;
+        }
     }
-     printOutSelectorsAndAttributes(&blockList);
+    //printOutSelectorsAndAttributes(&blockList);
+    //printOutBlockList(&blockList);
+}
 
+myString printOutAmmountOfSections(DoubleLinkedList<BlockListNode>& blockList) {
+    BlockListNode* temp = blockList.headNode;
+    int counter = 0;
+    if (temp != NULL) {
+        while (temp != NULL) {
+            counter += temp->currentAmountOfSections;
+            temp = temp->next;
+        }
+    }
+    char counterInChar = counter + '0';
+    myString returnValue = { "? == " };
+    returnValue += counterInChar;
+    return returnValue;
+}
+
+bool checkIfThereAreTwoCommasInInput(myString str) {
+    int counter = 0;
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == ',') counter++;
+    }
+    return counter == 2;
+}
+
+myString printOutAmountOfSelectorsOfSection(int index, DoubleLinkedList<BlockListNode>& blockList) {
+    SectionNode desiredSection = blockList.headNode->sections[index];
+    SelectorListNode* temp = desiredSection.selectorList->headNode;
+    int counter = 0;
+
+    if (temp != NULL) {
+        while (temp != NULL) {
+             counter++;
+            temp = temp->next;
+        }
+    }
+    char indexInChar = (index+1) + '0';
+    char counterInChar = counter + '0';
+    if (counter != 0) {
+        myString returnValue = { "" };
+        returnValue += indexInChar;
+        returnValue += { ",S,? == " };
+        returnValue += counterInChar;
+        return returnValue;
+    }
+    return myString { "" };
+}
+
+myString printOutAmountOfAttributesOfSection(int index, DoubleLinkedList<BlockListNode>& blockList) {
+    SectionNode desiredSection = blockList.headNode->sections[index];
+    AttributeListNode* temp = desiredSection.attributeList->headNode;
+    int counter = 0;
+    myString emptyString = { "" };
+    if (temp != NULL) {
+        while (temp != NULL) {
+            counter++;
+            temp = temp->next;
+        }
+    }
+    char indexInChar = (index + 1) + '0';
+    char counterInChar = counter + '0';
+    if (counter != 0) {
+        myString returnValue = { "" };
+        returnValue += indexInChar;
+        returnValue += { ",A,? == " };
+        returnValue += counterInChar;
+        return returnValue;
+    }
+    return myString{ "" };
+}
+
+
+int main() {
+    DoubleLinkedList<BlockListNode> blockList;
+    char character;
+    myString input = { "" };
+    myString output = { "" };
+
+    getCSSInput(blockList);
+    while (cin >> character) {
+        input += character;
+        if (input == "????") cout << "Sekcja komend" << "\n";
+        else if (input == "****") {
+            getCSSInput(blockList);
+            input = "";
+        }
+        else if (input == "?") {
+            output += printOutAmmountOfSections(blockList);
+            output += "\n";
+            input = "";
+        }
+        else if (checkIfThereAreTwoCommasInInput(input) && input.length() == 5  && input[4] == '?') {
+            int sectionIndex = input[0] - '0' - 1;
+            if (input[2] == 'S') {
+                output += printOutAmountOfSelectorsOfSection(sectionIndex, blockList);
+            }
+            if (input[2] == 'A') {
+                output += printOutAmountOfAttributesOfSection(sectionIndex, blockList);
+            }
+            output += "\n";
+            input = "";
+        }
+        
+
+    }
+    cout << output;
     return 0;
 }
