@@ -791,5 +791,6 @@ int main() {
         }
     }
     cout << output;
+    system("pause");
     return 0;
 }

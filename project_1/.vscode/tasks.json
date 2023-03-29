@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe kompiluj aktywny plik",
+			"command": "C:\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${workspaceFolder}/*.cpp",
+				"-o",
+				"${fileDirname}\\a.exe"
+			],
+			"options": {
+				"externalConsole": true,
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "kompilator: C:\\MinGW\\bin\\g++.exe"
+		}
+	]
+}
