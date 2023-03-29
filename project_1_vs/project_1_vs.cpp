@@ -470,6 +470,30 @@ myString printOutAmountOfAttributesOfSection(int index, DoubleLinkedList<BlockLi
 }
 
 
+myString printOutNSelectorOfSection(int selectorIndex, int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
+    SectionNode desiredSection = blockList.headNode->sections[sectionIndex];
+    SelectorListNode* temp = desiredSection.selectorList->headNode;
+    int counter = 0;
+    if (temp != NULL) {
+        while (temp != NULL && counter != selectorIndex) {
+            temp = temp->next;
+            counter++;
+        }
+    }
+    char sectionIndexInChar = (sectionIndex + 1) + '0';
+    char selectorIndexInChar = (selectorIndex + 1)+ '0';
+    if (counter == selectorIndex) {
+        myString returnValue = { "" };
+        returnValue += sectionIndexInChar;
+        returnValue += { ",S," };
+        returnValue += selectorIndexInChar;
+        returnValue += {" == "};
+        returnValue += temp->name;
+        return returnValue;
+    }
+    return myString{ "" };
+}
+
 int main() {
     DoubleLinkedList<BlockListNode> blockList;
     char character;
@@ -489,10 +513,16 @@ int main() {
             output += "\n";
             input = "";
         }
-        else if (checkIfThereAreTwoCommasInInput(input) && input.length() == 5  && input[4] == '?') {
+        else if (checkIfThereAreTwoCommasInInput(input) && input.length() == 5) {
             int sectionIndex = input[0] - '0' - 1;
             if (input[2] == 'S') {
-                output += printOutAmountOfSelectorsOfSection(sectionIndex, blockList);
+                if (isdigit(input[0]) && isdigit(input[4])) {
+                    int selectorIndex = input[4] - '0' - 1;
+                    output += printOutNSelectorOfSection(selectorIndex, sectionIndex, blockList);
+                }
+                else {
+                    output += printOutAmountOfSelectorsOfSection(sectionIndex, blockList);
+                }
             }
             if (input[2] == 'A') {
                 output += printOutAmountOfAttributesOfSection(sectionIndex, blockList);
@@ -500,8 +530,6 @@ int main() {
             output += "\n";
             input = "";
         }
-        
-
     }
     cout << output;
     return 0;
