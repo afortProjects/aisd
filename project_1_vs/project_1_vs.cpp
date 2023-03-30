@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include "string.h"
+#include <cstdlib>
 using namespace std;
 
 #define AMOUNT_OF_BLOCKS_IN_BLOCK_LIST 8
@@ -187,7 +188,7 @@ struct AttributeListNode {
 
 
 
-template<typename T> class DoubleLinkedList {
+template<class T> class DoubleLinkedList {
 public:
     T* headNode = nullptr;
     int amountOfBlocks = 0;
@@ -435,12 +436,13 @@ SectionNode getSection(int sectionIndex, DoubleLinkedList<BlockListNode>& blockL
 
 
 SectionNode* getSectionAsAPointer(int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
+    //todo: fixxxxxxxxxsxxxxxxx
     int counter = 0;
     SectionNode* desiredSection = new SectionNode;
     BlockListNode* blockListTemp = blockList.headNode;
     if (blockListTemp != NULL) {
         while (blockListTemp != NULL) {
-            if (sectionIndex > 8) sectionIndex -= 8;
+            if (sectionIndex > AMOUNT_OF_BLOCKS_IN_BLOCK_LIST) sectionIndex -= AMOUNT_OF_BLOCKS_IN_BLOCK_LIST;
             else {
                 desiredSection = &(blockListTemp->sections[sectionIndex]);
                 break;
@@ -448,7 +450,30 @@ SectionNode* getSectionAsAPointer(int sectionIndex, DoubleLinkedList<BlockListNo
             blockListTemp = blockListTemp->next;
         }
     }
-    return desiredSection;
+    if (sectionIndex < AMOUNT_OF_BLOCKS_IN_BLOCK_LIST)
+        return desiredSection;
+    else return nullptr;
+}
+
+BlockListNode* getBlockWithDesiredSection(int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
+    int counter = 0;
+    SectionNode* desiredSection = new SectionNode;
+    BlockListNode* blockListTemp = blockList.headNode;
+    if (blockListTemp != NULL) {
+        while (blockListTemp != NULL) {
+            if (sectionIndex > AMOUNT_OF_BLOCKS_IN_BLOCK_LIST) sectionIndex -= AMOUNT_OF_BLOCKS_IN_BLOCK_LIST;
+            else {
+                return blockListTemp;
+            }
+            blockListTemp = blockListTemp->next;
+        }
+    }
+    if (sectionIndex < AMOUNT_OF_BLOCKS_IN_BLOCK_LIST) {
+        return blockListTemp;
+    }
+    else {
+        return nullptr;
+    }
 }
 
 myString printOutAmmountOfSections(DoubleLinkedList<BlockListNode>& blockList) {
@@ -460,7 +485,8 @@ myString printOutAmmountOfSections(DoubleLinkedList<BlockListNode>& blockList) {
             temp = temp->next;
         }
     }
-    char counterInChar = counter + '0';
+    char counterInChar[512];
+    sprintf(counterInChar, "%d", counter);
     myString returnValue = { "? == " };
     returnValue += counterInChar;
     return returnValue;
@@ -468,23 +494,32 @@ myString printOutAmmountOfSections(DoubleLinkedList<BlockListNode>& blockList) {
 
 myString printOutAmountOfSelectorsOfSection(int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
     SelectorListNode* temp = getSectionAsAPointer(sectionIndex, blockList)->selectorList->headNode;
+    if (temp != nullptr) {
+        int counter = 0;
 
-    int counter = 0;
+        if (temp != NULL) {
+            while (temp != NULL) {
+                counter++;
+                temp = temp->next;
+            }
+        }
+        char sectionIndexInChar[512];
+        char counterInChar[512];
 
-    if (temp != NULL) {
-        while (temp != NULL) {
-            counter++;
-            temp = temp->next;
+        sprintf(sectionIndexInChar, "%d", sectionIndex + 1);
+        sprintf(counterInChar, "%d", counter);
+
+        if (counter != 0) {
+
+            myString returnValue = { "" };
+            returnValue += sectionIndexInChar;
+            returnValue += { ",S,? == " };
+            returnValue += counterInChar;
+            return returnValue;
         }
     }
-    char sectionIndexInChar = (sectionIndex + 1) + '0';
-    char counterInChar = counter + '0';
-    if (counter != 0) {
-        myString returnValue = { "" };
-        returnValue += sectionIndexInChar;
-        returnValue += { ",S,? == " };
-        returnValue += counterInChar;
-        return returnValue;
+    else {
+        return myString{ "" };
     }
     return myString{ "" };
 }
@@ -492,7 +527,7 @@ myString printOutAmountOfSelectorsOfSection(int sectionIndex, DoubleLinkedList<B
 myString printOutAmountOfAttributesOfSection(int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
     int counter = 0;
     AttributeListNode* temp = getSectionAsAPointer(sectionIndex, blockList)->attributeList->headNode;
-
+    if (temp == nullptr) return myString{ " " };
     counter = 0;
     myString emptyString = { "" };
     if (temp != NULL) {
@@ -501,8 +536,13 @@ myString printOutAmountOfAttributesOfSection(int sectionIndex, DoubleLinkedList<
             temp = temp->next;
         }
     }
-    char sectionIndexInChar = (sectionIndex + 1) + '0';
-    char counterInChar = counter + '0';
+    char sectionIndexInChar[512];
+    char counterInChar[512];
+
+    sprintf(sectionIndexInChar, "%d", sectionIndex + 1);
+    sprintf(counterInChar, "%d", counter);
+
+
     if (counter != 0) {
         myString returnValue = { "" };
         returnValue += sectionIndexInChar;
@@ -513,18 +553,23 @@ myString printOutAmountOfAttributesOfSection(int sectionIndex, DoubleLinkedList<
     return myString{ "" };
 }
 
-
 myString printOutNSelectorOfSection(int selectorIndex, int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
     int counter = 0;
     SelectorListNode* temp = getSectionAsAPointer(sectionIndex, blockList)->selectorList->headNode;
+    if (temp == nullptr) return myString{ " " };
+
     if (temp != NULL) {
         while (temp != NULL && counter != selectorIndex) {
             temp = temp->next;
             counter++;
         }
     }
-    char sectionIndexInChar = (sectionIndex + 1) + '0';
-    char selectorIndexInChar = (selectorIndex + 1) + '0';
+    char sectionIndexInChar[512];
+    char selectorIndexInChar[512];
+
+    sprintf(sectionIndexInChar, "%d", sectionIndex + 1);
+    sprintf(selectorIndexInChar, "%d", selectorIndex + 1);
+
     if (counter == selectorIndex && temp != NULL) {
         myString returnValue = { "" };
         returnValue += sectionIndexInChar;
@@ -541,12 +586,17 @@ myString printOutNAttributeOfSection(int sectionIndex, myString attributeName, D
     //todo: fixx section index 
     int counter = 0;
     AttributeListNode* temp = getSectionAsAPointer(sectionIndex, blockList)->attributeList->headNode;
+    if (temp == nullptr) return myString{ " " };
+
     if (temp != NULL) {
         while (temp != NULL && temp->name != attributeName) {
             temp = temp->next;
         }
     }
-    char sectionIndexInChar = (sectionIndex + 1) + '0';
+    char sectionIndexInChar[512];
+
+    sprintf(sectionIndexInChar, "%d", sectionIndex + 1);
+
     if (temp != NULL && temp->name == attributeName) {
         myString returnValue = { "" };
         returnValue += sectionIndexInChar;
@@ -581,7 +631,11 @@ myString printOutAmountOfAttributeOccurences(myString attributeName, DoubleLinke
         }
     }
 
-    char counterInChar = counter + '0';
+    char counterInChar[512];
+
+    sprintf(counterInChar, "%d", counter);
+
+
     myString returnValue = { "" };
     returnValue += attributeName;
     returnValue += { ",A,? == " };
@@ -605,7 +659,9 @@ myString printOutAmountOfSelectorOccurences(myString selectorName, DoubleLinkedL
         }
     }
 
-    char counterInChar = counter + '0';
+    char counterInChar[512];
+
+    sprintf(counterInChar, "%d", counter);
     myString returnValue = { "" };
     returnValue += selectorName;
     returnValue += { ",S,? == " };
@@ -618,14 +674,14 @@ myString printOutValueOfAttributeWithNameNForSelectorZ(myString selectorName, my
     int counter = 0;
     if (temp != NULL) {
         while (temp != NULL) {
-            for (int i = temp->currentAmountOfSections-1; i > 0 ; i--) {
+            for (int i = temp->currentAmountOfSections - 1; i > 0; i--) {
                 SelectorListNode* currentSelectorListTemp = temp->sections[i].selectorList->getLastNode();
                 AttributeListNode* currentAttributeListTemp = temp->sections[i].attributeList->getLastNode();
 
                 bool selectorFlag = false;
                 while (currentSelectorListTemp != NULL && !selectorFlag) {
                     if (currentSelectorListTemp->name == selectorName) selectorFlag = true;
-                    if(!selectorFlag) currentSelectorListTemp = currentSelectorListTemp->prev;
+                    if (!selectorFlag) currentSelectorListTemp = currentSelectorListTemp->prev;
                 }
 
                 bool attributeFlag = false;
@@ -652,19 +708,33 @@ myString printOutValueOfAttributeWithNameNForSelectorZ(myString selectorName, my
     return emptyString;
 }
 
-
 myString deleteSection(int sectionIndex, DoubleLinkedList<BlockListNode>& blockList) {
-    SectionNode* temp = getSectionAsAPointer(sectionIndex, blockList);
-    // need to make curremnt amonuit of sections --, and transfere blocklist last to next 
-    //formatting 
-    delete temp->attributeList;
-    delete temp->selectorList;
-    temp->attributeList = new DoubleLinkedList<AttributeListNode>;
-    temp->selectorList = new DoubleLinkedList<SelectorListNode>;
-    temp->attributeList->headNode = NULL;
-    temp->selectorList->headNode = NULL;
-    myString returnValue = { "deleted" };
-    return returnValue;
+    BlockListNode* temp = getBlockWithDesiredSection(sectionIndex, blockList);
+    char sectionIndexInChar[512];
+
+    sprintf(sectionIndexInChar, "%d", sectionIndex + 1);
+
+    myString returnValue = { "" };
+    returnValue += sectionIndexInChar;
+
+    if (temp != nullptr) {
+        int sectionIndexCopy = sectionIndex;
+        while (sectionIndexCopy > AMOUNT_OF_BLOCKS_IN_BLOCK_LIST) sectionIndexCopy -= AMOUNT_OF_BLOCKS_IN_BLOCK_LIST;
+        temp->currentAmountOfSections--;
+        delete temp->sections[sectionIndexCopy].attributeList;
+        delete temp->sections[sectionIndexCopy].selectorList;
+        temp->sections[sectionIndexCopy].attributeList = new DoubleLinkedList<AttributeListNode>;
+        temp->sections[sectionIndexCopy].selectorList = new DoubleLinkedList<SelectorListNode>;
+        temp->sections[sectionIndexCopy].attributeList->headNode = NULL;
+        temp->sections[sectionIndexCopy].selectorList->headNode = NULL;
+
+        returnValue += { ",D,* == deleted" };
+        return returnValue;
+    }
+    else {
+        myString emptyString = { "" };
+        return emptyString;
+    }
 }
 
 myString deleteSectionWithProvidedAttributeName(int sectionIndex, myString attributeName, DoubleLinkedList<BlockListNode>& blockList) {
@@ -677,7 +747,7 @@ myString deleteSectionWithProvidedAttributeName(int sectionIndex, myString attri
                 tempAttrList->prev->next = tempAttrList->next;
                 if (tempAttrList->prev->next == NULL && tempAttrList->next == NULL) {
                     //delete section
-                     myString rValue = deleteSection(sectionIndex, blockList);
+                    myString rValue = deleteSection(sectionIndex, blockList);
                 }
                 else {
                     tempAttrList->name = NULL;
@@ -709,7 +779,7 @@ int main() {
     myString output = { "" };
     getCSSInput(blockList);
     while (cin >> character >> noskipws) {
-       if (character == '\n' || character == ' ') {
+        if (character == '\n' || character == ' ') {
             if (input == "????") cout << "Sekcja komend";
             else if (input == "****") {
                 getCSSInput(blockList);
@@ -724,8 +794,8 @@ int main() {
                 myString secondParameter = { "" };
                 myString thirdParameter = { "" };
                 myString temp = { "" };
-                for(int i = 0; i < input.length(); i++) {
-                    if (input[i] == ',' || i == input.length()-1) {
+                for (int i = 0; i < input.length(); i++) {
+                    if (input[i] == ',' || i == input.length() - 1) {
                         if (i == input.length() - 1)
                             temp += input[i];
                         if (firstParameter == "") firstParameter = temp;
@@ -777,7 +847,7 @@ int main() {
                     if (thirdParameter == "*") {
                         output += deleteSection(sectionIndex, blockList);
                     }
-                    if (isFirstParameterNumber) {
+                    else if (isFirstParameterNumber) {
                         output += deleteSectionWithProvidedAttributeName(sectionIndex, thirdParameter, blockList);
                     }
                 }
@@ -786,10 +856,11 @@ int main() {
             output += '\n';
             input = "";
         }
-        else {
+        else if (character != '\n') {
             input += character;
         }
     }
     cout << output;
+    system("pause");
     return 0;
 }
