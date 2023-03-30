@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "new": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "iosfwd": "cpp",
+        "type_traits": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp",
+        "xstring": "cpp",
+        "xlocale": "cpp"
+    }
+}
