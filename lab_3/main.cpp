@@ -17,9 +17,9 @@ int knapsack(int capacity, std::vector<int> profits, std::vector<int> weights, i
    for (i = 0; i <= amountOfObjects; i++) {
       for (j = 0; j <= capacity; j++) {
          if (i == 0 || j == 0)
-                solutions[i][j] = 0;
+            solutions[i][j] = 0;
          else if (weights[i - 1] <= j)
-            solutions[i][j] = max(solutions[i - 1][j - weights[i - 1]] + profits[i], solutions[i - 1][j]);
+            solutions[i][j] = max( profits[i-1] + solutions[i - 1][j - weights[i - 1]], solutions[i - 1][j]);
          else
             solutions[i][j] = solutions[i - 1][j];
       }
