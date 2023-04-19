@@ -1,7 +1,0 @@
-﻿  project_1_vs.cpp
-C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(303,42): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(308,5): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(325,10): warning C4101: 'spaceCharacter': unreferenced local variable
-C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(874,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(874,39): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-  project_1_vs.vcxproj -> C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\x64\Debug\project_1_vs.exe
