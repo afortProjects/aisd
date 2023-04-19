@@ -1,9 +1,7 @@
 ﻿  project_1_vs.cpp
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(25,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(349,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(366,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(557,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(695,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(695,39): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\project_1_vs.cpp(725,34): warning C4018: '<': signed/unsigned mismatch
-  project_1_vs.vcxproj -> C:\Users\Wojtek\Dropbox\Studia\Semestr 2\AiSD\project_1_vs\x64\Debug\project_1_vs.exe
+C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(303,42): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(308,5): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(325,10): warning C4101: 'spaceCharacter': unreferenced local variable
+C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(874,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\project_1_vs.cpp(874,39): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+  project_1_vs.vcxproj -> C:\Users\Wojtek\Dropbox\Studia\Semestr2\AiSD\project_1_vs\x64\Debug\project_1_vs.exe
